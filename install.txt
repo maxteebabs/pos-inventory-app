@@ -1,0 +1,27 @@
+@ECHO OFF
+ECHO WELCOME TO MULTITVAPP
+echo %cd%
+cd C:\
+mkdir data
+cd C:\data
+mkdir log
+sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB\Server\3.6\bin\mongod.exe\" --service --config=\"C:\Program Files\MongoDB\Server\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+cd C:\Program Files\MongoDB\Server
+@echo off
+echo.>"C:\Program Files\MongoDB\Server\mongod.cfg
+@echo off
+(
+    echo systemLog:
+    echo destination: file
+    echo path: c:\data\log\mongod.log
+    echo storage:
+    echo dbPath: c:\data\db
+) > mongod.cfg
+
+net start MongoDB
+cls
+pushd %~dp0
+node index.js
+mongod
+CLS
+EXIT
