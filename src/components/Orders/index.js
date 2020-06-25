@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import 'toastr/build/toastr.min.css';
 import Axios from 'axios';
 import {} from '../../models/Order';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 import moment from 'moment';
 
 const service = new OrderService();
@@ -30,7 +32,7 @@ class Order extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
-    this.getOrders(this.page);
+    this.getOrders(this.state.page);
   }
   async getOrders(page) {
     Axios.all(await service.getAll(this.props.token, page))
@@ -74,7 +76,7 @@ class Order extends Component {
       });
   }
   displayDate(d) {
-    let formattedDate = moment(d).format("YYYY-MM-DD");
+    let formattedDate = moment(d).format("YYYY-MM-DD HH:mm:ss");
     return formattedDate;
   }
   format(number, n, x) {
@@ -93,6 +95,20 @@ class Order extends Component {
     } else {
       this.getOrders(page);
     }
+  }
+  async confirmDelete(id, index) {
+    var c = window.confirm("Are you sure you want to delete this item?");
+    if(c) {
+        let resp = await service.delete(id, this.props.token);
+        if(resp.status === 200) {
+          toastr.success(resp.data.msg);
+          //we need to pop it out
+          let { orders } = this.state;
+          orders.splice(index, 1);
+          this.setState({orders});
+        }
+    }
+    return false;
   }
   render() {
     let { orders, error, page } = this.state;
@@ -115,7 +131,7 @@ class Order extends Component {
               </Link>
             </span>
           </div>
-          
+          {this.state.orders.length > 20 &&
           <ul className="">
             <li className="waves-effect page-links">
               <a href="#!" onClick={() => this.changePage(--page)} title="prev">
@@ -128,6 +144,7 @@ class Order extends Component {
               </a>
             </li>
           </ul>
+          }
 
           <table className="striped responsive-table">
             <thead>
@@ -158,6 +175,15 @@ class Order extends Component {
                       >
                         View
                       </Link>
+                      {" "}
+                      {this.props.isAdmin &&
+                      <a
+                        href="#"
+                        className="delBtn"
+                        onClick={() => this.confirmDelete(order._id, index)}
+                      >
+                        Delete
+                      </a>}
                       {/* <Link to={{pathname:`/order/edit/${order._id}`}}
                             className="">Edit</Link>  */}
                     </td>

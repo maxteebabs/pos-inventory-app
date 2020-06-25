@@ -1,5 +1,6 @@
 @ECHO OFF
-ECHO WELCOME TO MULTITVAPP
+if not "%1"=="am_admin" (powershell start -verb runas '%0' am_admin & exit /b)
+ECHO WELCOME TO POSDB
 echo %cd%
 cd C:\
 mkdir data

@@ -80,7 +80,7 @@ class ChangePassword extends Component {
                         type="password"
                         className="validate"
                     />
-                    <label htmlFor="password">Password</label>
+                    <label className="active" htmlFor="password">Password</label>
                     </div>
                 </div>
                 <div className="row">
@@ -92,7 +92,7 @@ class ChangePassword extends Component {
                         type="password"
                         className="validate"
                     />
-                    <label htmlFor="cpassword">Confirm Password</label>
+                    <label className="active" htmlFor="cpassword">Confirm Password</label>
                     </div>
                 </div>
               <button onClick={ this.handleSubmit } 

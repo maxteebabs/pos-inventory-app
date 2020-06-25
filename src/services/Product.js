@@ -47,7 +47,7 @@ export class ProductService {
         return [err.response];  
       });
   }
-  getAll(token, page = '') {
+  getAll(token, page = 1) {
     const axios = Axios.create({
       baseURL: appConfig.getUrl('products'),
     });

@@ -211,7 +211,6 @@ class Product extends Component {
                         className="delBtn"
                         onClick={() => this.confirmDelete(product._id, index)}
                       >
-                        {" "}
                         Delete
                       </a>
                     </td>

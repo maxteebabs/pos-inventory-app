@@ -71,7 +71,7 @@ class Register extends Component {
                     autoComplete="on"
                     className="validate"
                   />
-                  <label htmlFor="fullname">Fullname</label>
+                  <label className="active" htmlFor="fullname">Fullname</label>
                 </div>
               </div>
               <div className="row">
@@ -83,7 +83,7 @@ class Register extends Component {
                     autoComplete="on"
                     className="validate"
                   />
-                  <label htmlFor="email">Email</label>
+                  <label className="active" htmlFor="email">Email</label>
                 </div>
               </div>
               <div className="row">
@@ -95,7 +95,7 @@ class Register extends Component {
                     autoComplete="on"
                     className="validate"
                   />
-                  <label htmlFor="password">Password</label>
+                  <label className="active" htmlFor="password">Password</label>
                 </div>
               </div>
 
@@ -108,7 +108,7 @@ class Register extends Component {
                     type="password"
                     className="validate"
                   />
-                  <label htmlFor="confirm_password">Password Again</label>
+                  <label className="active" htmlFor="confirm_password">Password Again</label>
                 </div>
               </div>
               <button 

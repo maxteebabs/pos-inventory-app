@@ -25,10 +25,12 @@ module.exports = (router) => {
     router.route('/orders').get(AuthGuard, OrderController.findAll);
     router.route('/order/store').post(AuthGuard, OrderController.store);
     router.route('/order/find/:id').get(AuthGuard, OrderController.find);
+    router.route('/order/delete/:id').delete(AuthGuard, OrderController.destroy);
     // router.route("/orders/search/").post(AuthGuard, OrderController.search);
     // router.route('/order/update/:id').patch(AuthGuard, OrderController.update);
 
     //users
     router.route("/users").get(AuthGuard, UserController.findAll);
+    router.route("/user/toggleAdmin").post(AuthGuard, UserController.toggleAdmin);
     router.route("/user/delete/:id").delete(AuthGuard, UserController.destroy);
 }

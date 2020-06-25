@@ -11,7 +11,7 @@ module.exports = {
         // res.header("Access-Control-Allow-Origin", "*");
         // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         let {email, password} = req.body;
-        User.findOne({email: email}, (err, user) => {
+        User.findOne({email: email.toLowerCase()}, (err, user) => {
             if(err || !user) {
                 res.status(401).json({status: false, error: 'Incorrect email/password'});
             }else{
@@ -27,10 +27,17 @@ module.exports = {
             }
         });
     },
-    register : (req, res, next) => {
+    register: async (req, res, next) => {
         let {email, password, confirm_password, fullname} = req.body;
         if(password === confirm_password) {
-            var user = new User({email:email, password: password, fullname: fullname}); 
+            //check if we have a user in the system
+            let checkUser = await User.findOne({ deleted: null });
+            var user = new User({email:email.toLowerCase()
+                , password: password, fullname: fullname}); 
+            if(!checkUser)
+                //make the first user an administrator
+                user.isAdmin = true;
+
             return user.save((err) =>  {
                 if(err) {
                     res.status(401).json({status: false, error: 'Error registering new user'});
@@ -44,7 +51,7 @@ module.exports = {
     forgotPassword: async (req, res, nex) => {
         let {email} = req.body;
         // lets find the user
-        let user = await User.findOne({ deleted: null, email: email });
+        let user = await User.findOne({ deleted: null, email: email.toLowerCase() });
         if(user) {
             //generate token
             var payload = user.toJson();

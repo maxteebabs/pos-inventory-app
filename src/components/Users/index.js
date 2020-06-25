@@ -18,14 +18,16 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      email: "",
       isAdmin: false,
       isActive: false,
-      date_entered: '',
+      date_entered: "",
       users: [],
       error: null,
+      success: ""
     };
     this.getUsers = this.getUsers.bind(this);
+    this.toggleAdmin = this.toggleAdmin.bind(this);
   }
   componentDidMount() {
     this.getUsers();
@@ -47,7 +49,6 @@ class User extends Component {
           this.setState({error: 'Failed to retrieve users.' });
       });
   }
-
   async confirmDelete(id, index) {
     var c = window.confirm("Are you sure you want to delete this item?");
     if(c) {
@@ -65,51 +66,74 @@ class User extends Component {
     }
     return false;
   }
-    displayDate(d) {
-        let formattedDate = moment(d).format('YYYY-MM-DD');
-        return formattedDate;
-    }
+  displayDate(d) {
+      let formattedDate = moment(d).format('YYYY-MM-DD');
+      return formattedDate;
+  }
+  async toggleAdmin(userId) {
+      let resp = await userService.toggleAdmin(userId, this.props.token);
+      console.log(resp);
+      if(resp.status){
+        this.setState({success: "Successful"});
+        this.getUsers();
+      }
+  }
   render() {
-    let { users, error } = this.state;
+    let { users, error, success } = this.state;
+    // console.log(this.props)
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <div>
         <Header />
         <div className="container">
-          <center><h4>Users</h4></center>
-          { (error) ? 
-                <div className="error pad"> { error } </div> : '' }
-          <Link className="btn blue" to="/dashboard">Back</Link>
-          <table className="striped responsive-table">
+          <center>
+            <h4>Users</h4>
+          </center>
+          {error ? <div className="error pad"> {error} </div> : ""}
+          {success ? <div className="success pad"> {success} </div> : ""}
+          <Link className="btn blue" to="/dashboard">
+            Back
+          </Link>
+          <table className="striped responsive-table users">
             <thead>
-                <tr>
-                    <th>S/N</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Date Entered</th>
-                    <th></th>
-                </tr>
+              <tr>
+                <th>S/N</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Date Entered</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-                {users.map((user, index) => {
-                    return (
-                    <tr className="products" key={index}>
-                        <td>{ index+1 }</td>
-                        <td>{ user.email }</td>
-                        <td>{ (user.isAdmin) ? 'Admin' : 'User' }</td>
-                        <td>{ (user.isActive) ? 'Active' : 'Inactive' }</td>
-                        <td>{ this.displayDate(user.date_entered) }</td>
-                        <td>
-                            {(!user.isAdmin) ? 
-                          <a href="#" 
-                            className="delBtn" 
-                            onClick={() => this.confirmDelete(user._id, index)}> Delete</a>
-                            : null }
-                        </td>
-                    </tr>
-                    );
-                })}
+              {users.map((user, index) => {
+                return (
+                  <tr className="products" key={index}>
+                    <td>{index + 1}</td>
+                    <td>{user.email}</td>
+                    <td>{user.isAdmin ? "Admin" : "User"}</td>
+                    <td>{user.isActive ? "Active" : "Inactive"}</td>
+                    <td>{this.displayDate(user.date_entered)}</td>
+                    <td>
+                      {this.props.isAdmin && this.props.id !==user._id &&
+                      <button className="btn blue"
+                        onClick={() => this.toggleAdmin(user._id)}>
+                          {user.isAdmin ? 'Change to User' :  'Change to Admin' } 
+                          </button>
+                        }
+                      {user.isAdmin && (
+                        <a
+                          href="#"
+                          className="btn blue"
+                          onClick={() => this.confirmDelete(user._id, index)}
+                        >
+                           Delete
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

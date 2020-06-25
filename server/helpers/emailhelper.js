@@ -11,7 +11,7 @@ const auth = {
     // refreshToken: process.env.REFRESHTOKEN,
     // accessToken: process.env.ACCESSTOKEN
 };
-console.log(auth);
+// console.log(auth);
 let transporter = nodemailer.createTransport({
     // host: "smtp.mail.yahoo.com",
     service: 'Gmail',

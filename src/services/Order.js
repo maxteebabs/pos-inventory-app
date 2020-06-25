@@ -20,7 +20,7 @@ export class OrderService {
         return [err.response];  
       });
   }
-  getAll(token, page = '') {
+  getAll(token, page) {
     const axios = Axios.create({
       baseURL: appConfig.getUrl('orders'),
     });
@@ -28,7 +28,7 @@ export class OrderService {
       'Content-Type': 'application/json',
       'x-access-token': token,
     };
-
+  
     return axios
       .get(`/?page=${page}`, { headers: headers })
       .then(res => {
@@ -70,5 +70,21 @@ export class OrderService {
     }).catch(err => {
       return [err.response];  
     });
+  }
+
+  delete(id, token) {
+    const axios = Axios.create({
+      baseURL: appConfig.getUrl(`order/delete/${id}`),
+    });
+    var headers = {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    };
+    return axios.delete('/', { headers: headers })
+      .then(res => {
+        return res;
+      }).catch(err => {
+        return err.response;
+      });
   }
 }

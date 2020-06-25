@@ -61,11 +61,12 @@ class Login extends Component {
                   <input
                     onChange={e => this.setState({ email: e.target.value })}
                     id="email"
+                    name="email"
                     autoComplete="on"
                     type="email"
                     className="validate"
                   />
-                  <label htmlFor="email">Email</label>
+                  <label className="active" htmlFor="email">Email</label>
                 </div>
               </div>
               <div className="row">
@@ -75,9 +76,10 @@ class Login extends Component {
                     id="password"
                     autoComplete="on"
                     type="password"
+                    name="password"
                     className="validate"
                   />
-                  <label htmlFor="password">Password</label>
+                  <label className="active" htmlFor="password">Password</label>
                 </div>
               </div>
               <button onClick={ this.handleLogin } className="btn waves-effect waves-light blue darken-2" type="button" name="action">Login</button>

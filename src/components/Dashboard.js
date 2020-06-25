@@ -6,6 +6,7 @@ import Header from './common/Header';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { AddBox, List, AddShoppingCart, People, ShoppingCart } from "@material-ui/icons";
 // import Axios from 'axios';
 // import { AuthService } from '../services/Auth';
 // let service = new AuthService();
@@ -31,7 +32,7 @@ class Dashboard extends Component {
   // }
   
   render() {
-      return(
+      return (
         <div>
           <Header />
           <div className="container">
@@ -40,7 +41,7 @@ class Dashboard extends Component {
                 <div className="col s12 m4">
                   <div className="card-panel pos-card card-1">
                     <Link to="product/add">
-                      <i className="large material-icons">store</i>
+                      <AddBox style={{ fontSize: 120 }} />
                       <p className="white-text">Add Product</p>
                     </Link>
                   </div>
@@ -48,7 +49,7 @@ class Dashboard extends Component {
                 <div className="col s12 m4">
                   <div className="card-panel pos-card card-2">
                     <Link to="product">
-                      <i className="large material-icons">list</i>
+                      <List style={{ fontSize: 120 }} />
                       <p className="white-text">List Products</p>
                     </Link>
                   </div>
@@ -56,7 +57,7 @@ class Dashboard extends Component {
                 <div className="col s12 m4">
                   <div className="card-panel pos-card card-3">
                     <Link to="order/add">
-                      <i className="large material-icons">device_hub</i>
+                      <AddShoppingCart style={{ fontSize: 120 }} />
                       <p className="white-text">New Order</p>
                     </Link>
                   </div>
@@ -66,7 +67,7 @@ class Dashboard extends Component {
                 <div className="col s12 m4">
                   <div className="card-panel pos-card card-5">
                     <Link to="users">
-                      <i className="large material-icons">contacts</i>
+                      <People style={{ fontSize: 120 }} />
                       <p className="white-text">Users</p>
                     </Link>
                   </div>
@@ -74,13 +75,13 @@ class Dashboard extends Component {
                 <div className="col s12 m4">
                   <div className="card-panel pos-card card-4">
                     <Link to="orders">
-                      <i className="large material-icons">content_paste</i>
+                      <ShoppingCart style={{ fontSize: 120 }} />
                       <p className="white-text">Orders</p>
                     </Link>
                   </div>
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
         </div>
       );

@@ -1,3 +1,6 @@
+input[type='checkbox'] {
+  opacity: 1 !important;
+}
 .App {
   text-align: center;
 }
@@ -26,6 +29,9 @@
   color: white;
 }
 
+table.users .btn{
+  margin-right: 5px;
+}
 .App-link {
   color: #61dafb;
 }

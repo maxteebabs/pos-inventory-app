@@ -22,7 +22,7 @@ import ViewOrder from './components/Orders/view';
 // import { createHistory, useBasename } from 'history';
 
 import './App.css';
-import 'materialize-css';
+// import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 
 // @ts-ignore
@@ -36,25 +36,35 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path="/" render={() => (<Redirect to="/dashboard" />)} />
+            <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+            <Route exact path="/index.html" render={() => <Redirect to="/dashboard" />} />
             <Route exact path="/login" render={() => <Login />} />
             <Route exact path="/register" render={() => <Register />} />
-            <Route exact path="/reset/password" render={() => <ResetPassword />} />
-            <Route exact path="/change/password/:token" render={() => <ChangePassword />} />
+            <Route
+              exact
+              path="/reset/password"
+              render={() => <ResetPassword />}
+            />
+            <Route
+              exact
+              path="/change/password/:token"
+              render={() => <ChangePassword />}
+            />
 
             <Route exact path="/dashboard" render={() => <Dashboard />} />
             <Route exact path="/product/add" render={() => <AddProduct />} />
-            <Route exact path="/product/edit/:id" render={() => <AddProduct />} />
+            <Route
+              exact
+              path="/product/edit/:id"
+              render={() => <AddProduct />}
+            />
             <Route exact path="/product" render={() => <Product />} />
             <Route exact path="/logout" render={() => <Login />} />
-            
-            
+
             <Route exact path="/orders" render={() => <Order />} />
             <Route exact path="/order/add" render={() => <AddOrder />} />
             <Route exact path="/order/view/:id" render={() => <ViewOrder />} />
             <Route exact path="/users" render={() => <User />} />
-
-
           </Switch>
         </div>
       </Router>

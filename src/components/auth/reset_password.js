@@ -65,7 +65,7 @@ class ResetPassword extends Component {
                     type="email"
                     className="validate"
                   />
-                  <label htmlFor="email">Email</label>
+                  <label className="active" htmlFor="email">Email</label>
                 </div>
               </div>
               <button onClick={ this.handleReset } 

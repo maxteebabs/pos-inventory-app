@@ -58,4 +58,20 @@ export class UserService {
       return err.response;  
     });
   }
+
+  toggleAdmin(userId, token) {
+      const axios = Axios.create({
+        baseURL: appConfig.getUrl(`user/toggleAdmin`),
+      });
+      var headers = {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      };
+      return axios.post('/', JSON.stringify({appUserId: userId}), { headers: headers })
+      .then(res => {
+        return res;
+      }).catch(err => {
+        return err.response;  
+      });
+}
 }

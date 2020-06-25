@@ -41,7 +41,10 @@ var ProductController = {
           if (product.images) {
             let obj = {};
             var paths = JSON.parse(product.images);
-            obj.image = fs.readFileSync(paths[0], { encoding: "base64" });
+            if(paths) {
+              obj.image = fs.readFileSync(paths[0], { encoding: "base64" });
+            }
+            
             obj.name = product.name;
             obj.images = product.images;
             obj.price = product.price;

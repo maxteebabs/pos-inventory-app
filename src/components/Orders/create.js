@@ -32,6 +32,7 @@ class AddOrder extends Component {
             item_id: '',
             itemCode: '',
             itemName: '',
+            item_name: '',
             orderRefCode: '',
             created_by: '',
             error: null,
@@ -164,8 +165,9 @@ class AddOrder extends Component {
         });
     }
     addItem(event) {
+        this.setState({error:""});
         try {
-            const { quantity, amount, items, itemCode, itemName, item_id  } = this.state;
+            const { quantity, amount, items, itemCode, itemName, item_name, item_id  } = this.state;
             if(quantity < 1) {
                 throw new Error('Quantity cannot be zero(0)');
             }
@@ -175,10 +177,11 @@ class AddOrder extends Component {
             //lets disconstruct the items
             let item = new OrderItem({amount, quantity, itemCode, itemName, item_id});
             items.unshift(item);
-            this.setState({items: items, amount:0, quantity:1, itemCode:'', itemName: '', item_id: null});
+            // this.setState({items: items, amount:0, quantity:1, itemCode:'', itemName: '', item_id: null});
             this.computeTotal();
         }catch(Error){
-            console.log(Error)
+            this.setState({error: Error.message})
+            console.log('eee',Error.message)
         }
     }
     computeTotal() {
@@ -204,6 +207,7 @@ class AddOrder extends Component {
     handleInputChange(item) { 
         this.setState({amount: item.price});
         this.setState({ itemName: item.label });
+        this.setState({ item_name: item.label });
         this.setState({ item_id: item.value });
         this.setState({ itemCode: item.itemCode });
     }
@@ -274,7 +278,7 @@ class AddOrder extends Component {
                                     <button className="btn waves-effect waves-light blue" 
                                             style={{marginTop: '10px'}}
                                             onClick={() => this.processOrder()}>
-                                            Submit
+                                            Print & Save
                                         </button>
                                         <button className="btn waves-effect waves-light red" 
                                         style={{marginTop: '10px', marginLeft: '5px'}}
@@ -286,38 +290,37 @@ class AddOrder extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col s5">
+                        <div className="col s6">
+                            {error ? <div className="error pad"> {error} </div> : ""}
                             <form>
+                            <div className="row">
                             <AsyncSelect
                                 // cacheOptions
                                 loadOptions={this.loadOptions}
                                 defaultOptions
                                 onChange={this.handleInputChange}
                             />
-                            {/* <Select
-                                // value={itemCode}
-                                // onChange={this.handleChange}
-                            //     options={products}
-                            // /> */}
-                                <div className="input-field">
+                                {/* <div className="input-field">
                                     <div className="col s12">
                                         <select onChange={product => this.setState({product})}>
                                             <option></option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="input-field col s12">
                                     <input
                                         onChange={e => this.setState({ quantity: e.target.value })}
                                         id="quantity"
+                                        placeholder="Quantity"
                                         ref={(input) => this.quantity = input}
                                         value={this.state.quantity}
                                         autoComplete="on"
                                         type="number"
                                         className="validate"
                                     />
-                                    <label htmlFor="quantity">Quantity</label>
+                                    <label className="active"  htmlFor="quantity">Quantity</label>
                                 </div>
+    
                                 <div className="input-field col s12">
                                     <input
                                         onChange={e => this.setState({ amount: e.target.value })}
@@ -328,16 +331,19 @@ class AddOrder extends Component {
                                         type="number"
                                         className="validate"
                                     />
-                                    <label htmlFor="amount">Amount</label>
+                                    <label className="active" htmlFor="amount">Amount</label>
                                 </div>
+                                <div className="row">
                                 <button onClick={this.addItem} 
                                     className="btn waves-effect waves-light blue" type="button" name="action">
                                     {(this.state._id) ? 'Save changes' : 'Add Item'}
                                 </button>
                                     <Link style={{marginLeft: 10}} className="btn blue" to="/dashboard">Back</Link>
+                                </div>
+                            </div>
                             </form>
                         </div>
-                        <div className="col s3">
+                        {/* <div className="col s3">
                             {(items.length > 0) ? 
                                 <table className="summary">
                                     <thead>
@@ -360,7 +366,7 @@ class AddOrder extends Component {
                                     }
                                 </table> : null
                             }
-                        </div>
+                        </div> */}
                     </div>
                     <div className="row">
                         <form className="offset-s2 col s8">

@@ -26,6 +26,25 @@ module.exports = {
             return res.status(200).json({users: users});
         });   
     },
+
+    toggleAdmin:(req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        // console.log(req.body)
+        User.findOne({ deleted: null, _id:req.body.appUserId }, null, (err, user) => {
+            if (err || !user) {
+                return res.status(401).json({ status: false, error: 'Invalid request' });
+            }
+            user.isAdmin = !user.isAdmin;
+            user.save(err => {
+                if (err) {
+                    return res.status(401).json(err);
+                } else {
+                    return res.status(200).json({ status: "success", user });
+                }
+            });
+        }); 
+    },
     
     passwordReset: (req, res, next) => {
         res.header("Access-Control-Allow-Origin", "*");

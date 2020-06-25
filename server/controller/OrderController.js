@@ -182,6 +182,25 @@ let OrderController = {
       console.log(err.Message());
       // return res.status(401).json(err);
     }
-  }
+  },
+  destroy: (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    try {
+      Order.findOne({ _id: req.params.id }, (err, order) => {
+        if (err || !order) {
+          throw err;
+        }
+        order.deleted = Date.now();
+        order.save();
+        return res.status(200).json({ msg: "order deleted successfully." });
+      });
+    } catch (err) {
+      return res.status(401).json(err);
+    }
+  },
 };
 module.exports = OrderController;

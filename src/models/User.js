@@ -15,5 +15,6 @@ export class User{
         this.id = user._id;
         this.isActive = user.isActive;
         this.token = user.token;
+        this.isAdmin = user.isAdmin;
     }
 }
