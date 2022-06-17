@@ -75,7 +75,7 @@
     "@material-ui/core": "^4.10.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "electron": "^9.0.3",
+    "electron": "^15.5.5",
     "electron-builder": "^20.28.4",
     "electron-packager": "^14.2.1",
     "enzyme": "^3.11.0",
