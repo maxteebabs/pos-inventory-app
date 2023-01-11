@@ -18,7 +18,7 @@
     "express-session": "^1.17.0",
     "fibers": "^5.0.0",
     "history": "^4.10.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.9.3",
